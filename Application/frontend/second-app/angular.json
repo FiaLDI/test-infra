@@ -36,7 +36,7 @@
             "server": "src/main.server.ts",
             "outputMode": "server",
             "security": {
-              "allowedHosts": []
+              "allowedHosts": ["frontend-2"]
             },
             "ssr": {
               "entry": "src/server.ts"

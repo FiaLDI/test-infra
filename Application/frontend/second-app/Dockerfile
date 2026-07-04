@@ -1,10 +1,14 @@
 FROM node:22-alpine
+
 WORKDIR /app
 
-COPY package.json package-lock.json ./
-RUN npm i
+COPY package*.json ./
+RUN npm ci
 
 COPY . .
 
-EXPOSE 4200
-CMD ["npm", "run", "start"]
+RUN npm run build
+
+EXPOSE 4000
+
+CMD ["npm", "run", "serve:ssr:second-app"]
