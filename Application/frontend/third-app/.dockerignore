@@ -1,0 +1,7 @@
+node_modules
+.git
+.nuxt
+.cache
+*.md
+!README*.md
+README-secret.md

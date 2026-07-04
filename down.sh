@@ -1,4 +1,5 @@
 #bin/bash
+
 cd Application/frontend
 docker-compose down -v
 

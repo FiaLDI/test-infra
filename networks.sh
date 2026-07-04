@@ -1,3 +1,4 @@
+#bin/bash
 
 docker network create frontend-network
 docker network create backend-network

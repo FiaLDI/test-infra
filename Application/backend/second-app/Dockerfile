@@ -2,7 +2,7 @@ FROM node:22-alpine
 WORKDIR /app
 
 COPY package.json package-lock.json ./
-RUN npm i
+RUN --mount=type=cache,target=/root/.npm npm ci
 
 COPY . .
 
