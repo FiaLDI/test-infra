@@ -13,8 +13,28 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - image: backend-1
+            context: ./Application/backend/first-app
+
+          - image: backend-2
+            context: ./Application/backend/second-app
+
+          - image: frontend-1
+            context: ./Application/frontend/first-app
+
+          - image: frontend-2
+            context: ./Application/frontend/second-app
+
+          - image: frontend-3
+            context: ./Application/frontend/third-app
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
@@ -22,26 +42,15 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: Convert owner to lowercase
-        run: echo "OWNER_LC=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_ENV
+        shell: bash
+        run: |
+          echo "OWNER_LC=${GITHUB_REPOSITORY_OWNER,,}" >> "$GITHUB_ENV"
 
-      - name: Docker version
-        run: docker --version
-
-      - name: Docker Compose version
-        run: docker compose version
-
-      - name: Network create
-        run: docker network create frontend-network || true && docker network create backend-network || true && docker network create infrastructure-network || true
-
-      - name: Network Check
-        run: docker network ls
-
-      - name: Build and Push Backend 1
+      - name: Build and Push ${{ matrix.image }}
         uses: docker/build-push-action@v6
         with:
-          context: ./Application/backend/first-app
+          context: ${{ matrix.context }}
           push: true
-          tags: ghcr.io/${{ env.OWNER_LC }}/backend-1:latest
-
+          tags: ghcr.io/${{ env.OWNER_LC }}/${{ matrix.image }}:latest
