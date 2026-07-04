@@ -12,31 +12,46 @@ permissions:
   packages: write
 
 jobs:
+  matrix:
+    name: Generate Matrix
+    runs-on: ubuntu-latest
+
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: matrix
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+
+            const config = JSON.parse(
+              fs.readFileSync('.github/apps.json', 'utf8')
+            );
+
+            core.setOutput(
+              'matrix',
+              JSON.stringify({
+                include: config.apps
+              })
+            );
+
   build:
+    name: Build ${{ matrix.name }}
+
+    needs: matrix
+
     runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          - image: backend-1
-            context: ./Application/backend/first-app
-
-          - image: backend-2
-            context: ./Application/backend/second-app
-
-          - image: frontend-1
-            context: ./Application/frontend/first-app
-
-          - image: frontend-2
-            context: ./Application/frontend/second-app
-
-          - image: frontend-3
-            context: ./Application/frontend/third-app
+      matrix: ${{ fromJson(needs.matrix.outputs.matrix) }}
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Convert owner to lowercase
         shell: bash
@@ -54,16 +69,16 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ env.OWNER_LC }}/${{ matrix.image }}
+          images: ghcr.io/${{ env.OWNER_LC }}/${{ matrix.name }}
           tags: |
             type=raw,value=latest
             type=sha
             type=ref,event=tag
 
-      - name: Build and Push ${{ matrix.image }}
+      - name: Build and Push
         uses: docker/build-push-action@v6
         with:
-          context: ${{ matrix.context }}
+          context: ./${{ matrix.path }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

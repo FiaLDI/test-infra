@@ -1,0 +1,29 @@
+{
+  "apps": [
+    {
+      "name": "backend-1",
+      "path": "Application/backend/first-app",
+      "type": "backend"
+    },
+    {
+      "name": "backend-2",
+      "path": "Application/backend/second-app",
+      "type": "backend"
+    },
+    {
+      "name": "frontend-1",
+      "path": "Application/frontend/first-app",
+      "type": "frontend"
+    },
+    {
+      "name": "frontend-2",
+      "path": "Application/frontend/second-app",
+      "type": "frontend"
+    },
+    {
+      "name": "frontend-3",
+      "path": "Application/frontend/third-app",
+      "type": "frontend"
+    }
+  ]
+}
