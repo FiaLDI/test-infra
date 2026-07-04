@@ -1,0 +1,33 @@
+services:
+  frontend-1:
+    build: ./first-app
+    container_name: frontend-1
+    restart: unless-stopped
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    networks:
+      - frontend-network
+  
+  frontend-2:
+    build: ./second-app
+    container_name: frontend-2
+    restart: unless-stopped
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    networks:
+      - frontend-network
+
+  frontend-3:
+    build: ./third-app
+    container_name: frontend-3
+    restart: unless-stopped
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - PORT=4201
+    networks:
+      - frontend-network
+
+networks:
+  frontend-network:
+    external: true
+    name: frontend-network

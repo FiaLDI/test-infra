@@ -1,0 +1,27 @@
+services:
+  backend-1:
+    build: ./first-app
+    restart: unless-stopped
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    networks:
+      - backend-network
+      - infrastructure-network
+  
+  backend-2:
+    build: ./second-app
+    restart: unless-stopped
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    networks:
+      - backend-network
+      - infrastructure-network
+
+networks:
+  backend-network:
+    external: true
+    name: backend-network
+  
+  infrastructure-network:
+    external: true
+    name: infrastructure-network

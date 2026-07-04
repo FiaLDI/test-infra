@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-myuser}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mypassword}
+      POSTGRES_DB: ${POSTGRES_DB:-mydatabase}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - infrastructure-network
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data
+    networks:
+      - infrastructure-network
+  
+  mongodb:
+    image: mongo:7
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME:-root}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD:-rootpassword}
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE:-mydatabase}
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - infrastructure-network
+
+
+volumes:
+  postgres-data:
+  redis-data:
+  mongodb-data:
+
+networks:
+  infrastructure-network:
+    external: true
+    name: infrastructure-network
