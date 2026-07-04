@@ -6,5 +6,7 @@ RUN npm i
 
 COPY . .
 
-EXPOSE 4201
-CMD ["npx", "nuxt", "dev", "--port", "4201"]
+RUN npm run build
+
+EXPOSE 4200
+CMD ["npx", "nuxt", "start"]

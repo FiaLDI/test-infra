@@ -23,7 +23,7 @@ services:
     restart: unless-stopped
     environment:
       - SPRING_PROFILES_ACTIVE=dev
-      - PORT=4201
+      - PORT=4200
     networks:
       - frontend-network
 
