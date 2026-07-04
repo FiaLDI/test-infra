@@ -12,6 +12,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Login to GitHub Container Registry
+          uses: docker/login-action@v3
+          with:
+            registry: ghcr.io
+            username: ${{ github.actor }}
+            password: ${{ secrets.SECRET_MY  }}
+
       - name: Docker version
         run: docker --version
 
@@ -23,13 +30,6 @@ jobs:
 
       - name: Network Check
         run: docker network ls
-
-      - name: Login to GitHub Container Registry
-          uses: docker/login-action@v3
-          with:
-            registry: ghcr.io
-            username: ${{ github.actor }}
-            password: ${{ secrets.SECRET_MY }}
 
       - name: Build Infrastructure
         working-directory: Infrastructure
