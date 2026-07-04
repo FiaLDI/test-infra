@@ -21,3 +21,6 @@ jobs:
       
       - name: Check directory contents
         run: ls -la
+
+      - name: Up containers
+        run: ./up.sh
