@@ -15,3 +15,6 @@ jobs:
 
       - name: Print message
         run: echo "Hello from GitHub Actions!"
+
+      - name: Current directory
+        run: pwd
