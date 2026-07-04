@@ -21,6 +21,9 @@ jobs:
       
       - name: Check directory contents
         run: ls -la
+  
+      - name: Up Networks
+        run: ./networks.sh
 
       - name: Up containers
         run: ./up.sh
