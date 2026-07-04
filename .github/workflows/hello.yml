@@ -17,7 +17,7 @@ jobs:
           with:
             registry: ghcr.io
             username: ${{ github.actor }}
-            password: ${{ secrets.SECRET_MY  }}
+            password: ${{ secrets.SECRET_MY }}
 
       - name: Docker version
         run: docker --version
