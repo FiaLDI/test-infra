@@ -1,4 +1,4 @@
-name: My First Action
+name: Build Project
 
 on:
   push:
@@ -6,40 +6,36 @@ on:
       - main
 
 jobs:
-  hello:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Print message
-        run: echo "Hello from GitHub Actions!"
-
-      - name: Current directory
-        run: pwd
-      
-      - name: Check directory contents
-        run: ls -la
-
-      - name: Check Docker version
+      - name: Docker version
         run: docker --version
-  
-      - name: Up Networks
-        run: ./networks.sh
+
+      - name: Docker Compose version
+        run: docker compose version
+
+      - name: Network create
+        run: docker network create frontend-network || true && docker network create backend-network || true && docker network create infrastructure-network || true
+
+      - name: Network Check
+        run: docker network ls
 
       - name: Build Infrastructure
-        run: docker compose build
         working-directory: Infrastructure
-      
+        run: docker compose build
+
       - name: Build Backend
-        run: docker compose build
         working-directory: Application/backend
-      
+        run: docker compose build
+
       - name: Build Frontend
-        run: docker compose build
         working-directory: Application/frontend
-      
-      - name: Build Gateway
         run: docker compose build
+
+      - name: Build Gateway
         working-directory: Gateway
+        run: docker compose build
