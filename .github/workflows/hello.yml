@@ -20,8 +20,7 @@ jobs:
           password: ${{ secrets.SECRET_MY }}
       
       - name: Convert owner to lowercase
-        run: |
-          echo "OWNER_LC=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_ENV
+        run: echo "OWNER_LC=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_ENV
 
       - name: Docker version
         run: docker --version
