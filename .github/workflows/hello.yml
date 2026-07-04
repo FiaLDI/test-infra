@@ -21,9 +21,25 @@ jobs:
       
       - name: Check directory contents
         run: ls -la
+
+      - name: Check Docker version
+        run: docker --version
   
       - name: Up Networks
         run: ./networks.sh
 
-      - name: Up containers
-        run: ./up.sh
+      - name: Build Infrastructure
+        run: docker compose build
+        working-directory: Infrastructure
+      
+      - name: Build Backend
+        run: docker compose build
+        working-directory: Application/backend
+      
+      - name: Build Frontend
+        run: docker compose build
+        working-directory: Application/frontend
+      
+      - name: Build Gateway
+        run: docker compose build
+        working-directory: Gateway
