@@ -31,18 +31,9 @@ jobs:
       - name: Network Check
         run: docker network ls
 
-      - name: Build Infrastructure
-        working-directory: Infrastructure
-        run: docker compose build
-
-      - name: Build Backend
-        working-directory: Application/backend
-        run: docker compose build
-
-      - name: Build Frontend
-        working-directory: Application/frontend
-        run: docker compose build
-
-      - name: Build Gateway
-        working-directory: Gateway
-        run: docker compose build
+      - name: Build and Push Backend 1
+        uses: docker/build-push-action@v6
+        with:
+          context: ./Application/backend/first-app
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/backend-1:latest
