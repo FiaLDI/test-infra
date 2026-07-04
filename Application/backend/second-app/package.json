@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "lint": "echo \"No linting configured\""
+    "lint": "echo \"No linting configured\"",
+    "test": "echo \"No tests configured\""
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
