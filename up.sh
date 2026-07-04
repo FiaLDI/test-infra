@@ -1,11 +1,15 @@
-#bin/bash
+#!/bin/bash
 
-cd Application/frontend
-docker-compose up -d --build
+set -e
 
-cd ../backend
-docker-compose up -d --build
+cd Infrastructure
+docker compose up -d --build
+
+cd ../Application/backend
+docker compose up -d --build
+
+cd ../frontend
+docker compose up -d --build
 
 cd ../../Gateway
-docker-compose up -d --build
- 
+docker compose up -d --build

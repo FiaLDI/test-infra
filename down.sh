@@ -8,3 +8,6 @@ docker-compose down -v
 
 cd ../../Gateway
 docker-compose down -v
+
+cd ../Infrastructure
+docker-compose down -v

@@ -3,17 +3,29 @@ services:
     build: ./first-app
     restart: unless-stopped
     environment:
-      - SPRING_PROFILES_ACTIVE=dev
+      - HOSTNAME=0.0.0.0
     networks:
       - frontend-network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://127.0.0.1:3000/1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
   
   frontend-2:
     build: ./second-app
     restart: unless-stopped
     environment:
-      - SPRING_PROFILES_ACTIVE=dev
+      - HOSTNAME=0.0.0.0
     networks:
       - frontend-network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:4000/2"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
   frontend-3:
     build: ./third-app
@@ -23,6 +35,12 @@ services:
       - PORT=4200
     networks:
       - frontend-network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:4200"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
 networks:
   frontend-network:
