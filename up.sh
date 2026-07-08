@@ -13,3 +13,6 @@ docker compose up -d --build
 
 cd ../../Gateway
 docker compose up -d --build
+
+cd ../Monitoring/zabbix
+docker compose up -d --build
