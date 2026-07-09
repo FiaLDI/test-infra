@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: third-f-app-service
+
+spec:
+  selector:
+    app: third-f-app
+
+  ports:
+    - port: 4200
+      targetPort: 4200
+
+  type: ClusterIP

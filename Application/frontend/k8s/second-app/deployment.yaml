@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: second-f-app
+  labels:
+    app: second-f-app
+
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: second-f-app
+    
+    spec:
+      containers:
+        - name: second-f-app
+          image: ghcr.io/fialdi/frontend-2:sha-668e3fb
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 4000
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+
+  selector:
+    matchLabels:
+      app: second-f-app
