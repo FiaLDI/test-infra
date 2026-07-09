@@ -36,7 +36,7 @@
             "server": "src/main.server.ts",
             "outputMode": "server",
             "security": {
-              "allowedHosts": ["frontend-2", "localhost"]
+              "allowedHosts": ["frontend-2", "localhost", "app.local"]
             },
             "ssr": {
               "entry": "src/server.ts"
@@ -78,7 +78,7 @@
           },
           "defaultConfiguration": "development",
           "options": {
-            "allowedHosts": ["frontend-2"]
+            "allowedHosts": ["frontend-2", "app.local"]
           }
         },
         "test": {

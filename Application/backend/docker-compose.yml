@@ -4,6 +4,8 @@ services:
     restart: unless-stopped
     environment:
       - SPRING_PROFILES_ACTIVE=dev
+      - MONGO_URI=mongodb://root:rootpassword@mongodb:27017/?authSource=admin
+      - MONGO_DB_NAME=mydatabase
     networks:
       - backend-network
       - infrastructure-network
@@ -19,6 +21,7 @@ services:
     restart: unless-stopped
     environment:
       - SPRING_PROFILES_ACTIVE=dev
+      - DATABASE_URL=postgresql://myuser:mypass@postgres:5432/mydb
     networks:
       - backend-network
       - infrastructure-network

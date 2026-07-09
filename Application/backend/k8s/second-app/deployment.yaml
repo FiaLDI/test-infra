@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: second-app
+  labels:
+    app: second-app
+
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: second-app
+    
+    spec:
+      containers:
+        - name: second-app
+          image: ghcr.io/fialdi/backend-2:sha-668e3fb
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 3002
+          envFrom:
+            - configMapRef:
+                name: app-config
+
+            - secretRef:
+                name: app-secret
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+
+  selector:
+    matchLabels:
+      app: second-app

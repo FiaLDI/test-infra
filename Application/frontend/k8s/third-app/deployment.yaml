@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: third-f-app
+  labels:
+    app: third-f-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: third-f-app
+  template:
+    metadata:
+      labels:
+        app: third-f-app
+    spec:
+      containers:
+        - name: third-f-app
+          image: ghcr.io/fialdi/frontend-3:sha-668e3fb
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 4200
+          env:
+            - name: PORT
+              value: "4200"
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"

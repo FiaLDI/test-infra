@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api-gateway
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+
+spec:
+  ingressClassName: nginx
+
+  rules:
+    - host: app.local
+      http:
+        paths:
+          - path: /api/1(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: first-app-service
+                port:
+                  number: 3001
+
+          - path: /api/2(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: second-app-service
+                port:
+                  number: 3002
